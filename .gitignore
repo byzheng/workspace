@@ -1,0 +1,16 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+*.Rds
+test.R
+Meta
+docs
+inst/doc
+cran-comments.md
+CRAN-RELEASE
+CRAN-SUBMISSION
+.httr-oauth
+.DS_Store
+.quarto
+test

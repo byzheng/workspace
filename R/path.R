@@ -11,6 +11,17 @@ active_file <- function() {
 
 
 
+#' Build a path relative to the project root
+#'
+#' Resolves the root directory differently depending on execution context:
+#' interactive sessions use the active editor file, knitr uses the current
+#' input document, and non-interactive runs use the workspace root with an
+#' optional `PROJECT_DIR` environment variable.
+#'
+#' @param ... Path components passed to [base::file.path()].
+#'
+#' @return A normalized path string.
+#' @export
 path <- function(...) {
     
     args <- commandArgs(FALSE)
