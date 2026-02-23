@@ -80,6 +80,6 @@ test_that("path uses current project when PROJECT_DIR is empty", {
 
     expect_equal(
         normalizePath(path("source", "data.csv"), mustWork = FALSE),
-        normalizePath(file.path(project, "source", "data.csv"), mustWork = FALSE)
+        normalizePath(file.path("source", "data.csv"), mustWork = FALSE)
     )
 })
