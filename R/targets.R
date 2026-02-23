@@ -62,16 +62,16 @@ tar_make_project <- function(project, ...) {
 #'
 #' Use in `_targets.R`:
 #' ```r
-#' tar_option_set(store = targets_store())
+#' tar_option_set(store = targets_store_prj())
 #' ```
-targets_store <- function() {
-    project_dir <- get_project_name()
+targets_store_prj <- function() {
+    project_dir <- get_prj_name()
     if (nzchar(project_dir)) {
         store_path <- file.path(project_dir, "_targets")
     } else {
         store_path <- "./_targets"
     }
-    abs_path <- file.path(find_ws(path(".")), store_path)
+    abs_path <- file.path(find_ws(path_prj(".")), store_path)
     to_relative_path(abs_path)
 }
 
@@ -80,7 +80,7 @@ targets_store <- function() {
 #'
 #' Convenience wrapper around [targets::tar_read()] that automatically specifies
 #' the targets store location for the current project. The project is auto-detected
-#' using [get_project_name()].
+#' using [get_prj_name()].
 #'
 #' @param name Name of the target to read (as a string or symbol).
 #' @param ... Additional arguments passed to [targets::tar_read()].
@@ -90,21 +90,21 @@ targets_store <- function() {
 #' @details
 #' Auto-detects the project and reads from its targets store. Equivalent to:
 #' ```r
-#' tar_read(name, store = targets_store())
+#' tar_read(name, store = targets_store_prj())
 #' ```
 #'
 #' Use in reports:
 #' ```r
-#' data <- tar_read_project("data")
-#' model <- tar_read_project("model")
-#' plot <- tar_read_project("plot")
+#' data <- tar_read_prj("data")
+#' model <- tar_read_prj("model")
+#' plot <- tar_read_prj("plot")
 #' ```
 #'
 #' @export
-tar_read_project <- function(name, ...) {
+tar_read_prj <- function(name, ...) {
     targets::tar_read_raw(
         name,
-        store = targets_store(),
+        store = targets_store_prj(),
         ...
     )
 }

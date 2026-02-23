@@ -23,57 +23,6 @@ knitr_input <- function() {
 }
 
 
-#' Get the current project name
-#'
-#' Infers the project name by calculating the relative path from workspace
-#' root to project root. Useful for automatically determining which project
-#' is being worked on.
-#'
-#' @return Character string with the project name (e.g., "A" for `projects/A`),
-#'   or `NULL` if no project is found or project is at workspace root.
-#'
-#' @details
-#' This function finds the workspace and project roots, then extracts the
-#' project identifier from the relative path. For a standard layout with
-#' `projects/A`, returns "A".
-#'
-#' Useful in reports and other contexts where you need to automatically
-#' reference the current project:
-#' ```r
-#' project <- get_project_name()
-#' if (!is.null(project)) {
-#'     data <- tar_read_project("data", project = project)
-#' }
-#' ```
-#'
-get_project_name <- function() {
-    workspace_root <- tryCatch(
-        find_ws(path = path_prj("")),
-        error = function(e) NULL
-    )
-    
-    if (is.null(workspace_root)) {
-        return(NULL)
-    }
-    
-    project_root <- path_prj(".")
-    
-    workspace_norm <- normalizePath(workspace_root, mustWork = FALSE, winslash = "/")
-    project_norm <- normalizePath(project_root, mustWork = FALSE, winslash = "/")
-    
-    if (identical(workspace_norm, project_norm)) {
-        return(NULL)
-    }
-    
-    rel_path <- to_relative_path(project_norm, start = workspace_norm)
-    
-    if (identical(rel_path, ".")) {
-        return(NULL)
-    }
-    
-    return(rel_path)
-}
-
 to_relative_path <- function(target, start = getwd()) {
     target_norm <- normalizePath(target, mustWork = FALSE, winslash = "/")
     start_norm <- normalizePath(start, mustWork = FALSE, winslash = "/")
