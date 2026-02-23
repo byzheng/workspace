@@ -46,3 +46,66 @@ tar_make_project <- function(project, ...) {
             store = file.path(project, "_targets"), ...)
     })
 }
+
+#' Get the targets store path for the current project
+#'
+#' Returns the path to the `_targets` directory for the project specified in
+#' the `PROJECT_DIR` environment variable. Useful in `_targets.R` and report
+#' files to configure the targets store without hardcoding paths.
+#'
+#' @return A character string with the targets store path, relative to the
+#'   workspace root. Returns `./_targets` if no project is detected.
+#'
+#' @details
+#' This function reads the `PROJECT_DIR` environment variable (typically set
+#' by [tar_make_project()]) and returns the associated `_targets` path.
+#'
+#' Use in `_targets.R`:
+#' ```r
+#' tar_option_set(store = workspace_targets_store())
+#' ```
+workspace_targets_store <- function() {
+    project_dir <- get_project_name()
+    if (nzchar(project_dir)) {
+        file.path(project_dir, "_targets")
+    } else {
+        "./_targets"
+    }
+}
+
+
+#' Read a target from the current project
+#'
+#' Convenience wrapper around [targets::tar_read()] that automatically specifies
+#' the targets store location for the current project. The project is auto-detected
+#' using [get_project_name()].
+#'
+#' @param name Name of the target to read (as a string or symbol).
+#' @param ... Additional arguments passed to [targets::tar_read()].
+#'
+#' @return The target value.
+#'
+#' @details
+#' Auto-detects the project and reads from its targets store. Equivalent to:
+#' ```r
+#' tar_read(name, store = workspace_targets_store_project(get_project_name()))
+#' ```
+#'
+#' Use in reports:
+#' ```r
+#' data <- tar_read_project("data")
+#' model <- tar_read_project("model")
+#' plot <- tar_read_project("plot")
+#' ```
+#'
+#' @export
+tar_read_project <- function(name, ...) {
+    if (!requireNamespace("targets", quietly = TRUE)) {
+        stop("The 'targets' package is required. Install with: install.packages('targets')")
+    }
+    targets::tar_read(
+        name,
+        store = workspace_targets_store(),
+        ...
+    )
+}

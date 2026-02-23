@@ -37,13 +37,19 @@ find_workspace <- function(path = ".") {
 #' Find the project root directory
 #'
 #' Locates the project root by looking for a `.project` file, falling back to
-#' workspace root if no project is found.
+#' workspace root if no project is found. Can be overridden by setting the
+#' `PROJECT_ROOT` environment variable.
 #'
 #' @param path Starting path to search from. Defaults to current directory.
 #'
 #' @return The project root directory path (or workspace root if no project found).
 #' @export
 find_project <- function(path = ".") {
+    project_root <- Sys.getenv("PROJECT_ROOT", unset = "")
+    if (nzchar(project_root)) {
+        return(normalizePath(project_root, mustWork = FALSE))
+    }
+    
     tryCatch(
         rprojroot::find_root(rprojroot::has_file(".project"), path = path),
         error = function(e) {
@@ -51,6 +57,60 @@ find_project <- function(path = ".") {
             return(find_workspace(path = path))
         }
     )
+}
+
+#' Get the current project name
+#'
+#' Infers the project name by calculating the relative path from workspace
+#' root to project root. Useful for automatically determining which project
+#' is being worked on.
+#'
+#' @param path Starting path to search from. Defaults to current directory.
+#'
+#' @return Character string with the project name (e.g., "A" for `projects/A`),
+#'   or `NULL` if no project is found or project is at workspace root.
+#'
+#' @details
+#' This function finds the workspace and project roots, then extracts the
+#' project identifier from the relative path. For a standard layout with
+#' `projects/A`, returns "A".
+#'
+#' Useful in reports and other contexts where you need to automatically
+#' reference the current project:
+#' ```r
+#' project <- get_project_name()
+#' if (!is.null(project)) {
+#'     data <- tar_read_project("data", project = project)
+#' }
+#' ```
+#'
+#' @export
+get_project_name <- function() {
+    workspace_root <- tryCatch(
+        find_workspace(path = path("")),
+        error = function(e) NULL
+    )
+    
+    if (is.null(workspace_root)) {
+        return(NULL)
+    }
+    
+    project_root <- find_project(path = path)
+    
+    workspace_norm <- normalizePath(workspace_root, mustWork = FALSE, winslash = "/")
+    project_norm <- normalizePath(project_root, mustWork = FALSE, winslash = "/")
+    
+    if (identical(workspace_norm, project_norm)) {
+        return(NULL)
+    }
+    
+    rel_path <- to_relative_path(project_norm, start = workspace_norm)
+    
+    if (identical(rel_path, ".")) {
+        return(NULL)
+    }
+    
+    return(rel_path)
 }
 
 to_relative_path <- function(target, start = getwd()) {
