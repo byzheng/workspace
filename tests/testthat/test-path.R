@@ -1,4 +1,4 @@
-test_that("path uses PROJECT_DIR under workspace in non-interactive mode", {
+test_that("path_prj uses PROJECT_DIR under workspace in non-interactive mode", {
     old <- getwd()
     on.exit(setwd(old), add = TRUE)
 
@@ -17,12 +17,12 @@ test_that("path uses PROJECT_DIR under workspace in non-interactive mode", {
     Sys.setenv(PROJECT_DIR = "projects/A")
 
     expect_equal(
-        path("source", "data.csv"),
+        path_prj("source", "data.csv"),
         file.path("projects", "A", "source", "data.csv")
     )
 })
 
-test_that("path falls back to workspace when PROJECT_DIR is empty", {
+test_that("path_prj falls back to workspace when PROJECT_DIR is empty", {
     old <- getwd()
     on.exit(setwd(old), add = TRUE)
 
@@ -37,7 +37,7 @@ test_that("path falls back to workspace when PROJECT_DIR is empty", {
     Sys.setenv(PROJECT_DIR = "")
 
     expect_equal(
-        path("source", "data.csv"),
+        path_prj("source", "data.csv"),
         file.path("source", "data.csv")
     )
 })
@@ -61,7 +61,7 @@ test_that("find_project falls back to workspace when .project is missing", {
     )
 })
 
-test_that("path uses current project when PROJECT_DIR is empty", {
+test_that("path_prj uses current project when PROJECT_DIR is empty", {
     old <- getwd()
     on.exit(setwd(old), add = TRUE)
 
@@ -79,7 +79,7 @@ test_that("path uses current project when PROJECT_DIR is empty", {
     Sys.setenv(PROJECT_DIR = "")
 
     expect_equal(
-        path("source", "data.csv"),
+        path_prj("source", "data.csv"),
         file.path("source", "data.csv")
     )
 })

@@ -1,7 +1,7 @@
 #' Run targets pipeline for a project
 #'
 #' Executes `tar_make()` for a specific project within a workspace. Sets up the
-#' working directory and environment variables so that `path()` and
+#' working directory and environment variables so that `path_prj()` and
 #' `workspace_targets_store()` work correctly.
 #'
 #' @param project Character string naming the project (e.g., "A" for `projects/A`).

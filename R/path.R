@@ -1,3 +1,4 @@
+
 active_file <- function() {
     if (requireNamespace("rstudioapi", quietly = TRUE) &&
         rstudioapi::isAvailable()) {
@@ -85,7 +86,7 @@ find_project <- function(path = ".") {
 #'
 get_project_name <- function() {
     workspace_root <- tryCatch(
-        find_workspace(path = path("")),
+        find_workspace(path = path_prj("")),
         error = function(e) NULL
     )
     
@@ -93,7 +94,7 @@ get_project_name <- function() {
         return(NULL)
     }
     
-    project_root <- path(".")
+    project_root <- path_prj(".")
     
     workspace_norm <- normalizePath(workspace_root, mustWork = FALSE, winslash = "/")
     project_norm <- normalizePath(project_root, mustWork = FALSE, winslash = "/")
@@ -153,7 +154,7 @@ to_relative_path <- function(target, start = getwd()) {
 #'
 #' @return A path string relative to [base::getwd()] when possible.
 #' @export
-path <- function(...) {
+path_prj <- function(...) {
     root_dir <- getwd()
     input <- knitr_input()
 
@@ -171,6 +172,22 @@ path <- function(...) {
             root_dir <- find_project(getwd())
         }
     }
+    target_path <- normalizePath(file.path(root_dir, ...), mustWork = FALSE)
+    return(to_relative_path(target_path, start = getwd()))
+}
+
+
+#' Build a path relative to the workspace root
+#'
+#' Resolves path components against the workspace root discovered by
+#' [find_workspace()].
+#'
+#' @param ... Path components passed to [base::file.path()].
+#'
+#' @return A path string relative to [base::getwd()] when possible.
+#' @export
+path_ws <- function(...) {
+    root_dir <- find_workspace()
     target_path <- normalizePath(file.path(root_dir, ...), mustWork = FALSE)
     return(to_relative_path(target_path, start = getwd()))
 }

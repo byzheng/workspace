@@ -16,7 +16,7 @@ Invisibly returns the result of \code{tar_make()}.
 }
 \description{
 Executes \code{tar_make()} for a specific project within a workspace. Sets up the
-working directory and environment variables so that \code{path()} and
+working directory and environment variables so that \code{path_prj()} and
 \code{workspace_targets_store()} work correctly.
 }
 \details{

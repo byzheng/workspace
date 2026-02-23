@@ -9,7 +9,7 @@ workspaces marked by `.workspace` and `.project` files.
 
 ## Features
 
-- Resolve file paths relative to the active project with `path()`.
+- Resolve file paths relative to the active project with `path_prj()`.
 - Detect workspace and project roots with `find_workspace()` and `find_project()`.
 - Run and read `{targets}` pipelines per project using `tar_make_project()` and
 	`tar_read_project()`.
@@ -26,7 +26,7 @@ context so pipelines run reliably across local development and CI.
 
 Execution context matters:
 
-- Interactive sessions favor the active editor file when resolving `path()` so
+- Interactive sessions favor the active editor file when resolving `path_prj()` so
 	you get project-relative paths while developing in an IDE.
 - Quarto or knitr documents use the current input file to infer the project
 	context, keeping report renders stable when run from the command line.
@@ -36,7 +36,7 @@ Execution context matters:
 VS Code tip:
 
 - Setting `options(vsc.rstudioapi = TRUE)` enables the VS Code R extension to
-	provide `rstudioapi` editor context, so `path()` can resolve the active file
+	provide `rstudioapi` editor context, so `path_prj()` can resolve the active file
 	during interactive sessions.
 
 For `{targets}`, `tar_make_project()` sets `PROJECT_DIR` and runs the pipeline

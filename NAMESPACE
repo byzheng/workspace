@@ -2,6 +2,7 @@
 
 export(find_project)
 export(find_workspace)
-export(path)
+export(path_prj)
+export(path_ws)
 export(tar_make_project)
 export(tar_read_project)
