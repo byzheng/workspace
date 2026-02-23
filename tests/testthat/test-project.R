@@ -42,7 +42,7 @@ test_that("path_prj falls back to workspace when PROJECT_DIR is empty", {
     )
 })
 
-test_that("find_project falls back to workspace when .project is missing", {
+test_that("find_prj falls back to workspace when .project is missing", {
     old <- getwd()
     on.exit(setwd(old), add = TRUE)
 
@@ -56,7 +56,7 @@ test_that("find_project falls back to workspace when .project is missing", {
     setwd(root)
 
     expect_equal(
-        workspace:::find_project(nested),
+        workspace:::find_prj(nested),
         normalizePath(root, mustWork = FALSE, winslash = "/")
     )
 })
