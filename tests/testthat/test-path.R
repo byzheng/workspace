@@ -18,10 +18,7 @@ test_that("path uses PROJECT_DIR under workspace in non-interactive mode", {
 
     expect_equal(
         path("source", "data.csv"),
-        workspace:::to_relative_path(
-            file.path(project, "source", "data.csv"),
-            start = getwd()
-        )
+        file.path("projects", "A", "source", "data.csv")
     )
 })
 
@@ -41,10 +38,7 @@ test_that("path falls back to workspace when PROJECT_DIR is empty", {
 
     expect_equal(
         path("source", "data.csv"),
-        workspace:::to_relative_path(
-            file.path(root, "source", "data.csv"),
-            start = getwd()
-        )
+        file.path("source", "data.csv")
     )
 })
 
@@ -86,9 +80,6 @@ test_that("path uses current project when PROJECT_DIR is empty", {
 
     expect_equal(
         path("source", "data.csv"),
-        workspace:::to_relative_path(
-            file.path(project, "source", "data.csv"),
-            start = getwd()
-        )
+        file.path("source", "data.csv")
     )
 })
