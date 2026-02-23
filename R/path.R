@@ -10,6 +10,18 @@ active_file <- function() {
 }
 
 
+knitr_input <- function() {
+    if (!requireNamespace("knitr", quietly = TRUE)) {
+        return(NULL)
+    }
+    input <- tryCatch(knitr::current_input(), error = function(e) NULL)
+    if (is.null(input) || length(input) == 0 || !nzchar(input)) {
+        return(NULL)
+    }
+    input
+}
+
+
 find_workspace <- function() {
     rprojroot::find_root(rprojroot::has_file(".workspace"))
 }
@@ -28,42 +40,32 @@ find_project <- function(path = ".") {
 #' Build a path relative to the project root
 #'
 #' Resolves the root directory differently depending on execution context:
-#' interactive sessions use the active editor file, knitr uses the current
-#' input document, and non-interactive runs use the workspace root with an
-#' optional `PROJECT_DIR` environment variable.
+#' interactive sessions use the active editor file (falling back to
+#' [base::getwd()]), knitr uses the current input document, and
+#' non-interactive runs use the workspace root with an optional `PROJECT_DIR`
+#' environment variable.
 #'
 #' @param ... Path components passed to [base::file.path()].
 #'
 #' @return A normalized path string.
 #' @export
 path <- function(...) {
-    
-    args <- commandArgs(FALSE)
-    print(paste("Command line arguments: ", paste(args, collapse = ", ")))
     root_dir <- getwd()
-    if (interactive()) {
-        message("Running interactively, using active_file() to find root dir")
-        print("Current file: ")
-        f <- active_file()
-        print(f)
-        dir <- dirname(f)
-        root_dir <- find_project(dir)
-    } else if (!is.null(knitr::current_input())) {
-        message("Running in knitr, using current_input() to find root dir")
-        root_dir <- normalizePath(knitr::current_input())
-        print(paste("Current input: ", root_dir))
-        root_dir <- find_project(dirname(root_dir))
+    input <- knitr_input()
 
-        print(paste("Root dir: ", root_dir))
+    if (interactive()) {
+        base_dir <- tryCatch(dirname(active_file()), error = function(e) getwd())
+        root_dir <- find_project(base_dir)
+    } else if (!is.null(input)) {
+        root_dir <- find_project(dirname(normalizePath(input, mustWork = FALSE)))
     } else {
-        message("Running non-interactively, using find_workspace() to find root dir")
         workspace_root <- find_workspace()
-        message(paste("Workspace root: ", workspace_root))
         project_dir <- Sys.getenv("PROJECT_DIR")
-        message(paste("Project dir from env: ", project_dir))
-        if (project_dir != "") {
+        if (nzchar(project_dir)) {
             root_dir <- file.path(workspace_root, project_dir)
+        } else {
+            root_dir <- workspace_root
         }
-    }    
+    }
     return(normalizePath(file.path(root_dir, ...), mustWork = FALSE))
 }

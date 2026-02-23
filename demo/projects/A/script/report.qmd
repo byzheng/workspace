@@ -1,0 +1,10 @@
+---
+title: "Script"
+---
+
+This is a test of script folder
+```{r}
+#source(here::here("function.R"))
+
+print(path("source", "data.csv"))
+```
