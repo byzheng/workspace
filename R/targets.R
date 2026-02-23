@@ -28,7 +28,7 @@ tar_make_project <- function(project, ...) {
         stop("The 'withr' package is required. Install with: install.packages('withr')")
     }
 
-    workspace_root <- find_workspace()
+    workspace_root <- find_ws()
     
 
     withr::with_dir(workspace_root, {
@@ -71,7 +71,7 @@ targets_store <- function() {
     } else {
         store_path <- "./_targets"
     }
-    abs_path <- file.path(find_workspace(path(".")), store_path)
+    abs_path <- file.path(find_ws(path(".")), store_path)
     to_relative_path(abs_path)
 }
 

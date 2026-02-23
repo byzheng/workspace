@@ -23,17 +23,6 @@ knitr_input <- function() {
 }
 
 
-#' Find the workspace root directory
-#'
-#' Locates the workspace root by looking for a `.workspace` file.
-#'
-#' @param path Starting path to search from. Defaults to current directory.
-#'
-#' @return The workspace root directory path.
-#' @export
-find_workspace <- function(path = ".") {
-    rprojroot::find_root(rprojroot::has_file(".workspace"), path = path)
-}
 
 #' Find the project root directory
 #'
@@ -56,7 +45,7 @@ find_project <- function(path = ".") {
         return(root_path)
     }, error = function(e) {
             message("No .project file found, using workspace root")
-            return(find_workspace(path = path))
+            return(find_ws(path = path))
         }
     )
 }
@@ -86,7 +75,7 @@ find_project <- function(path = ".") {
 #'
 get_project_name <- function() {
     workspace_root <- tryCatch(
-        find_workspace(path = path_prj("")),
+        find_ws(path = path_prj("")),
         error = function(e) NULL
     )
     
@@ -166,7 +155,7 @@ path_prj <- function(...) {
     } else {
         project_dir <- Sys.getenv("PROJECT_DIR")
         if (nzchar(project_dir)) {
-            workspace_root <- find_workspace()
+            workspace_root <- find_ws()
             root_dir <- file.path(workspace_root, project_dir)
         } else {
             root_dir <- find_project(getwd())
@@ -177,17 +166,3 @@ path_prj <- function(...) {
 }
 
 
-#' Build a path relative to the workspace root
-#'
-#' Resolves path components against the workspace root discovered by
-#' [find_workspace()].
-#'
-#' @param ... Path components passed to [base::file.path()].
-#'
-#' @return A path string relative to [base::getwd()] when possible.
-#' @export
-path_ws <- function(...) {
-    root_dir <- find_workspace()
-    target_path <- normalizePath(file.path(root_dir, ...), mustWork = FALSE)
-    return(to_relative_path(target_path, start = getwd()))
-}
