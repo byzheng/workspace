@@ -17,8 +17,11 @@ test_that("path uses PROJECT_DIR under workspace in non-interactive mode", {
     Sys.setenv(PROJECT_DIR = "projects/A")
 
     expect_equal(
-        normalizePath(path("source", "data.csv"), mustWork = FALSE),
-        normalizePath(file.path(project, "source", "data.csv"), mustWork = FALSE)
+        path("source", "data.csv"),
+        workspace:::to_relative_path(
+            file.path(project, "source", "data.csv"),
+            start = getwd()
+        )
     )
 })
 
@@ -37,8 +40,11 @@ test_that("path falls back to workspace when PROJECT_DIR is empty", {
     Sys.setenv(PROJECT_DIR = "")
 
     expect_equal(
-        normalizePath(path("source", "data.csv"), mustWork = FALSE),
-        normalizePath(file.path(root, "source", "data.csv"), mustWork = FALSE)
+        path("source", "data.csv"),
+        workspace:::to_relative_path(
+            file.path(root, "source", "data.csv"),
+            start = getwd()
+        )
     )
 })
 
@@ -79,7 +85,10 @@ test_that("path uses current project when PROJECT_DIR is empty", {
     Sys.setenv(PROJECT_DIR = "")
 
     expect_equal(
-        normalizePath(path("source", "data.csv"), mustWork = FALSE),
-        normalizePath(file.path("source", "data.csv"), mustWork = FALSE)
+        path("source", "data.csv"),
+        workspace:::to_relative_path(
+            file.path(project, "source", "data.csv"),
+            start = getwd()
+        )
     )
 })
