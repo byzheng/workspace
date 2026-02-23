@@ -22,7 +22,7 @@ using \code{\link[=get_project_name]{get_project_name()}}.
 \details{
 Auto-detects the project and reads from its targets store. Equivalent to:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tar_read(name, store = workspace_targets_store_project(get_project_name()))
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tar_read(name, store = targets_store())
 }\if{html}{\out{</div>}}
 
 Use in reports:

@@ -2,7 +2,6 @@
 
 export(find_project)
 export(find_workspace)
-export(get_project_name)
 export(path)
 export(tar_make_project)
 export(tar_read_project)
