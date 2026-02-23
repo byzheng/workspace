@@ -65,6 +65,8 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
+
+
 <div class="section level1">
 <div class="page-header"><h1 id="workspace">workspace<a class="anchor" aria-label="anchor" href="#workspace"></a>
 </h1></div>
@@ -88,6 +90,10 @@
 <li>Quarto or knitr documents use the current input file to infer the project context, keeping report renders stable when run from the command line.</li>
 <li>Non-interactive runs (like CI) use <code>PROJECT_DIR</code> when it is set; otherwise they fall back to the nearest project or the workspace root.</li>
 </ul>
+<p>VS Code tip:</p>
+<ul>
+<li>Setting <code>options(vsc.rstudioapi = TRUE)</code> enables the VS Code R extension to provide <code>rstudioapi</code> editor context, so <code><a href="reference/path.html">path()</a></code> can resolve the active file during interactive sessions.</li>
+</ul>
 <p>For <a href="https://docs.ropensci.org/targets/" class="external-link">targets</a>, <code><a href="reference/tar_make_project.html">tar_make_project()</a></code> sets <code>PROJECT_DIR</code> and runs the pipeline from the workspace root so <code>_targets.R</code>, data files, and Quarto reports resolve paths consistently.</p>
 </div>
 <div class="section level2">
@@ -98,6 +104,7 @@
 <code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'byzheng/workspace'</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
+
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -140,7 +147,12 @@
 </ul>
 </div>
 
-
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/byzheng/workspace/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/byzheng/workspace/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+</ul>
+</div>
 
   </div>
 </div>
