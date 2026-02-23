@@ -6,9 +6,6 @@
 \usage{
 get_project_name()
 }
-\arguments{
-\item{path}{Starting path to search from. Defaults to current directory.}
-}
 \value{
 Character string with the project name (e.g., "A" for \code{projects/A}),
 or \code{NULL} if no project is found or project is at workspace root.

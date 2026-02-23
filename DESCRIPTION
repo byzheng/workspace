@@ -1,9 +1,11 @@
 Package: workspace
-Title: Workspace
+Title: Project-Aware Paths and 'targets' Pipelines in a Workspace
 Version: 0.1.0
 Authors@R: 
     person("Bangou", "Zheng", , "zheng.bangyou@gmail.com", role = c("aut", "cre"))
-Description: Workspace
+Description: Provides helpers to work with multi-project directory layouts marked by
+    '.workspace' and '.project' files. Includes utilities to resolve project-aware
+    file paths and wrappers to run and read '{targets}' pipelines per project.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

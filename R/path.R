@@ -65,8 +65,6 @@ find_project <- function(path = ".") {
 #' root to project root. Useful for automatically determining which project
 #' is being worked on.
 #'
-#' @param path Starting path to search from. Defaults to current directory.
-#'
 #' @return Character string with the project name (e.g., "A" for `projects/A`),
 #'   or `NULL` if no project is found or project is at workspace root.
 #'
