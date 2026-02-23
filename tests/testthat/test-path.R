@@ -60,3 +60,26 @@ test_that("find_project falls back to workspace when .project is missing", {
         normalizePath(root, mustWork = FALSE, winslash = "/")
     )
 })
+
+test_that("path uses current project when PROJECT_DIR is empty", {
+    old <- getwd()
+    on.exit(setwd(old), add = TRUE)
+
+    root <- file.path(tempdir(), paste0("workspace-test-", as.integer(stats::runif(1, 1, 1e9))))
+    dir.create(root, recursive = TRUE, showWarnings = FALSE)
+    file.create(file.path(root, ".workspace"))
+
+    project <- file.path(root, "projects", "A")
+    dir.create(file.path(project, "source"), recursive = TRUE, showWarnings = FALSE)
+    file.create(file.path(project, ".project"))
+
+    setwd(project)
+    old_project_dir <- Sys.getenv("PROJECT_DIR", unset = "")
+    on.exit(Sys.setenv(PROJECT_DIR = old_project_dir), add = TRUE)
+    Sys.setenv(PROJECT_DIR = "")
+
+    expect_equal(
+        path("source", "data.csv"),
+        normalizePath(file.path(project, "source", "data.csv"), mustWork = FALSE)
+    )
+})

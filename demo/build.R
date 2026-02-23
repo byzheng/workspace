@@ -1,15 +1,5 @@
 library(targets)
 
-withr::with_dir("projects/A", {
-    Sys.setenv(PROJECT_DIR = "projects/A")
-    tar_make()
-    Sys.unsetenv("PROJECT_DIR")
-})
-
-
-
-library(targets)
-
 project_paths <- function(projects_dir = "projects") {
     dirs <- list.dirs(projects_dir, recursive = FALSE, full.names = FALSE)
     dirs[vapply(dirs, function(name) {

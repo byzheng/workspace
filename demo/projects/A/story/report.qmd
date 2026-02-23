@@ -1,0 +1,34 @@
+---
+title: "Script"
+---
+
+This report reads pipeline outputs from `_targets`.
+
+```{r}
+library(workspace)
+library(targets)
+
+tar_config_set(store = path("_targets"))
+
+data <- tar_read(data)
+model <- tar_read(model)
+plot <- tar_read(plot)
+```
+
+## Data
+
+```{r}
+head(data)
+```
+
+## Model
+
+```{r}
+model
+```
+
+## Plot
+
+```{r}
+plot
+```

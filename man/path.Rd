@@ -16,6 +16,6 @@ A normalized path string.
 Resolves the root directory differently depending on execution context:
 interactive sessions use the active editor file (falling back to
 \code{\link[base:getwd]{base::getwd()}}), knitr uses the current input document, and
-non-interactive runs use the workspace root with an optional \code{PROJECT_DIR}
-environment variable.
+non-interactive runs use \code{PROJECT_DIR} when available, otherwise the
+current project (or workspace when no project is found).
 }

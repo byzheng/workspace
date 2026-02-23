@@ -42,8 +42,8 @@ find_project <- function(path = ".") {
 #' Resolves the root directory differently depending on execution context:
 #' interactive sessions use the active editor file (falling back to
 #' [base::getwd()]), knitr uses the current input document, and
-#' non-interactive runs use the workspace root with an optional `PROJECT_DIR`
-#' environment variable.
+#' non-interactive runs use `PROJECT_DIR` when available, otherwise the
+#' current project (or workspace when no project is found).
 #'
 #' @param ... Path components passed to [base::file.path()].
 #'
@@ -59,12 +59,12 @@ path <- function(...) {
     } else if (!is.null(input)) {
         root_dir <- find_project(dirname(normalizePath(input, mustWork = FALSE)))
     } else {
-        workspace_root <- find_workspace()
         project_dir <- Sys.getenv("PROJECT_DIR")
         if (nzchar(project_dir)) {
+            workspace_root <- find_workspace()
             root_dir <- file.path(workspace_root, project_dir)
         } else {
-            root_dir <- workspace_root
+            root_dir <- find_project(getwd())
         }
     }
     return(normalizePath(file.path(root_dir, ...), mustWork = FALSE))
