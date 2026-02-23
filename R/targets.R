@@ -62,16 +62,16 @@ tar_make_project <- function(project, ...) {
 #'
 #' Use in `_targets.R`:
 #' ```r
-#' tar_option_set(store = workspace_targets_store())
+#' tar_option_set(store = targets_store())
 #' ```
-workspace_targets_store <- function() {
+targets_store <- function() {
     project_dir <- get_project_name()
     if (nzchar(project_dir)) {
         store_path <- file.path(project_dir, "_targets")
     } else {
         store_path <- "./_targets"
     }
-    abs_path <- file.path(find_workspace(), store_path)
+    abs_path <- file.path(find_workspace(path(".")), store_path)
     to_relative_path(abs_path)
 }
 
@@ -90,7 +90,7 @@ workspace_targets_store <- function() {
 #' @details
 #' Auto-detects the project and reads from its targets store. Equivalent to:
 #' ```r
-#' tar_read(name, store = workspace_targets_store_project(get_project_name()))
+#' tar_read(name, store = targets_store())
 #' ```
 #'
 #' Use in reports:
@@ -104,7 +104,7 @@ workspace_targets_store <- function() {
 tar_read_project <- function(name, ...) {
     targets::tar_read_raw(
         name,
-        store = workspace_targets_store(),
+        store = targets_store(),
         ...
     )
 }

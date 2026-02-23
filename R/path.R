@@ -50,9 +50,10 @@ find_project <- function(path = ".") {
         return(normalizePath(project_root, mustWork = FALSE))
     }
     
-    tryCatch(
-        rprojroot::find_root(rprojroot::has_file(".project"), path = path),
-        error = function(e) {
+    tryCatch({
+        root_path <- rprojroot::find_root(rprojroot::has_file(".project"), path = path)
+        return(root_path)
+    }, error = function(e) {
             message("No .project file found, using workspace root")
             return(find_workspace(path = path))
         }
@@ -82,7 +83,6 @@ find_project <- function(path = ".") {
 #' }
 #' ```
 #'
-#' @export
 get_project_name <- function() {
     workspace_root <- tryCatch(
         find_workspace(path = path("")),
@@ -93,7 +93,7 @@ get_project_name <- function() {
         return(NULL)
     }
     
-    project_root <- find_project()
+    project_root <- path(".")
     
     workspace_norm <- normalizePath(workspace_root, mustWork = FALSE, winslash = "/")
     project_norm <- normalizePath(project_root, mustWork = FALSE, winslash = "/")
