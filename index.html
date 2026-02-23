@@ -75,8 +75,8 @@
 <h2 id="features">Features<a class="anchor" aria-label="anchor" href="#features"></a>
 </h2>
 <ul>
-<li>Resolve file paths relative to the active project with <code><a href="reference/path.html">path()</a></code>.</li>
-<li>Detect workspace and project roots with <code><a href="reference/find_workspace.html">find_workspace()</a></code> and <code><a href="reference/find_project.html">find_project()</a></code>.</li>
+<li>Resolve file paths relative to the active project with <code><a href="reference/path_prj.html">path_prj()</a></code>.</li>
+<li>Detect workspace and project roots with <code><a href="reference/find_ws.html">find_ws()</a></code> and <code><a href="reference/find_project.html">find_project()</a></code>.</li>
 <li>Run and read <a href="https://docs.ropensci.org/targets/" class="external-link">targets</a> pipelines per project using <code><a href="reference/tar_make_project.html">tar_make_project()</a></code> and <code><a href="reference/tar_read_project.html">tar_read_project()</a></code>.</li>
 </ul>
 </div>
@@ -86,13 +86,13 @@
 <p>This package assumes a multi-project repository with a single workspace root that contains a <code>.workspace</code> marker, and one or more project folders each marked by a <code>.project</code> file (for example, <code>projects/A</code>). The goal is to make scripts, reports, and <a href="https://docs.ropensci.org/targets/" class="external-link">targets</a> pipelines behave consistently no matter where you run them from, without hardcoding paths. The helpers here resolve paths relative to the active project, and the <code><a href="reference/tar_make_project.html">tar_make_project()</a></code> wrapper sets the right project context so pipelines run reliably across local development and CI.</p>
 <p>Execution context matters:</p>
 <ul>
-<li>Interactive sessions favor the active editor file when resolving <code><a href="reference/path.html">path()</a></code> so you get project-relative paths while developing in an IDE.</li>
+<li>Interactive sessions favor the active editor file when resolving <code><a href="reference/path_prj.html">path_prj()</a></code> so you get project-relative paths while developing in an IDE.</li>
 <li>Quarto or knitr documents use the current input file to infer the project context, keeping report renders stable when run from the command line.</li>
 <li>Non-interactive runs (like CI) use <code>PROJECT_DIR</code> when it is set; otherwise they fall back to the nearest project or the workspace root.</li>
 </ul>
 <p>VS Code tip:</p>
 <ul>
-<li>Setting <code>options(vsc.rstudioapi = TRUE)</code> enables the VS Code R extension to provide <code>rstudioapi</code> editor context, so <code><a href="reference/path.html">path()</a></code> can resolve the active file during interactive sessions.</li>
+<li>Setting <code>options(vsc.rstudioapi = TRUE)</code> enables the VS Code R extension to provide <code>rstudioapi</code> editor context, so <code><a href="reference/path_prj.html">path_prj()</a></code> can resolve the active file during interactive sessions.</li>
 </ul>
 <p>For <a href="https://docs.ropensci.org/targets/" class="external-link">targets</a>, <code><a href="reference/tar_make_project.html">tar_make_project()</a></code> sets <code>PROJECT_DIR</code> and runs the pipeline from the workspace root so <code>_targets.R</code>, data files, and Quarto reports resolve paths consistently.</p>
 </div>
