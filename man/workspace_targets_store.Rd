@@ -21,11 +21,6 @@ by \code{\link[=tar_make_project]{tar_make_project()}}) and returns the associat
 
 Use in \verb{_targets.R}:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tar_config_set(store = workspace_targets_store())
-}\if{html}{\out{</div>}}
-
-Use in a report Quarto file:
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tar_config_set(store = workspace_targets_store())
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tar_option_set(store = workspace_targets_store())
 }\if{html}{\out{</div>}}
 }

@@ -67,10 +67,12 @@ tar_make_project <- function(project, ...) {
 workspace_targets_store <- function() {
     project_dir <- get_project_name()
     if (nzchar(project_dir)) {
-        file.path(project_dir, "_targets")
+        store_path <- file.path(project_dir, "_targets")
     } else {
-        "./_targets"
+        store_path <- "./_targets"
     }
+    abs_path <- file.path(find_workspace(), store_path)
+    to_relative_path(abs_path)
 }
 
 
@@ -100,10 +102,7 @@ workspace_targets_store <- function() {
 #'
 #' @export
 tar_read_project <- function(name, ...) {
-    if (!requireNamespace("targets", quietly = TRUE)) {
-        stop("The 'targets' package is required. Install with: install.packages('targets')")
-    }
-    targets::tar_read(
+    targets::tar_read_raw(
         name,
         store = workspace_targets_store(),
         ...

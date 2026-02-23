@@ -7,6 +7,7 @@ This report reads pipeline outputs from `_targets`.
 ```{r}
 library(workspace)
 
+
 data <- tar_read_project("data")
 model <- tar_read_project("model")
 plot <- tar_read_project("plot")

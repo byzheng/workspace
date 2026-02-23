@@ -14,5 +14,6 @@ The project root directory path (or workspace root if no project found).
 }
 \description{
 Locates the project root by looking for a \code{.project} file, falling back to
-workspace root if no project is found.
+workspace root if no project is found. Can be overridden by setting the
+\code{PROJECT_ROOT} environment variable.
 }

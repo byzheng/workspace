@@ -2,6 +2,7 @@
 
 export(find_project)
 export(find_workspace)
+export(get_project_name)
 export(path)
 export(tar_make_project)
-export(workspace_targets_store)
+export(tar_read_project)

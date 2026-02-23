@@ -45,7 +45,7 @@ find_workspace <- function(path = ".") {
 #' @return The project root directory path (or workspace root if no project found).
 #' @export
 find_project <- function(path = ".") {
-    project_root <- Sys.getenv("PROJECT_ROOT", unset = "")
+    project_root <- Sys.getenv("PROJECT_DIR", unset = "")
     if (nzchar(project_root)) {
         return(normalizePath(project_root, mustWork = FALSE))
     }
@@ -95,7 +95,7 @@ get_project_name <- function() {
         return(NULL)
     }
     
-    project_root <- find_project(path = path)
+    project_root <- find_project()
     
     workspace_norm <- normalizePath(workspace_root, mustWork = FALSE, winslash = "/")
     project_norm <- normalizePath(project_root, mustWork = FALSE, winslash = "/")
