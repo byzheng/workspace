@@ -1,3 +1,7 @@
+[![R-CMD-check](https://github.com/byzheng/workspace/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/byzheng/workspace/actions/workflows/R-CMD-check.yaml)
+
+
+
 # workspace
 
 Project-aware paths and per-project `{targets}` pipelines for multi-project
@@ -28,6 +32,12 @@ Execution context matters:
 	context, keeping report renders stable when run from the command line.
 - Non-interactive runs (like CI) use `PROJECT_DIR` when it is set; otherwise
 	they fall back to the nearest project or the workspace root.
+
+VS Code tip:
+
+- Setting `options(vsc.rstudioapi = TRUE)` enables the VS Code R extension to
+	provide `rstudioapi` editor context, so `path()` can resolve the active file
+	during interactive sessions.
 
 For `{targets}`, `tar_make_project()` sets `PROJECT_DIR` and runs the pipeline
 from the workspace root so `_targets.R`, data files, and Quarto reports resolve
