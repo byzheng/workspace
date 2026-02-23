@@ -10,7 +10,7 @@ path(...)
 \item{...}{Path components passed to \code{\link[base:file.path]{base::file.path()}}.}
 }
 \value{
-A normalized path string.
+A path string relative to \code{\link[base:getwd]{base::getwd()}} when possible.
 }
 \description{
 Resolves the root directory differently depending on execution context:

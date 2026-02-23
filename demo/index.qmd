@@ -10,4 +10,4 @@ To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
 print(workspace::path("index.qmd"))
 ```
 
-See [test](projects/A/script/report.qmd) for more details.
+See [test](projects/A/story/report.qmd) for more details.

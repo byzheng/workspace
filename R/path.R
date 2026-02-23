@@ -36,6 +36,35 @@ find_project <- function(path = ".") {
     )
 }
 
+to_relative_path <- function(target, start = getwd()) {
+    target_norm <- normalizePath(target, mustWork = FALSE, winslash = "/")
+    start_norm <- normalizePath(start, mustWork = FALSE, winslash = "/")
+
+    target_parts <- strsplit(target_norm, "/", fixed = TRUE)[[1]]
+    start_parts <- strsplit(start_norm, "/", fixed = TRUE)[[1]]
+
+    if (length(target_parts) > 0 && length(start_parts) > 0 &&
+        !identical(tolower(target_parts[[1]]), tolower(start_parts[[1]]))) {
+        return(target_norm)
+    }
+
+    common <- 0L
+    max_common <- min(length(target_parts), length(start_parts))
+    while (common < max_common &&
+           identical(tolower(target_parts[[common + 1L]]), tolower(start_parts[[common + 1L]]))) {
+        common <- common + 1L
+    }
+
+    up <- if (common < length(start_parts)) rep("..", length(start_parts) - common) else character(0)
+    down <- if (common < length(target_parts)) target_parts[(common + 1L):length(target_parts)] else character(0)
+    rel <- c(up, down)
+
+    if (length(rel) == 0) {
+        return(".")
+    }
+    do.call(file.path, as.list(rel))
+}
+
 
 #' Build a path relative to the project root
 #'
@@ -47,7 +76,7 @@ find_project <- function(path = ".") {
 #'
 #' @param ... Path components passed to [base::file.path()].
 #'
-#' @return A normalized path string.
+#' @return A path string relative to [base::getwd()] when possible.
 #' @export
 path <- function(...) {
     root_dir <- getwd()
@@ -67,5 +96,6 @@ path <- function(...) {
             root_dir <- find_project(getwd())
         }
     }
-    return(normalizePath(file.path(root_dir, ...), mustWork = FALSE))
+    target_path <- normalizePath(file.path(root_dir, ...), mustWork = FALSE)
+    return(to_relative_path(target_path, start = getwd()))
 }

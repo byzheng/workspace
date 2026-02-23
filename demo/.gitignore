@@ -20,3 +20,4 @@ _tmp_*
 **/*.quarto_ipynb
 index-listing.json
 _targets
+_targets.yaml
