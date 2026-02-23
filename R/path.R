@@ -22,16 +22,33 @@ knitr_input <- function() {
 }
 
 
-find_workspace <- function() {
-    rprojroot::find_root(rprojroot::has_file(".workspace"))
+#' Find the workspace root directory
+#'
+#' Locates the workspace root by looking for a `.workspace` file.
+#'
+#' @param path Starting path to search from. Defaults to current directory.
+#'
+#' @return The workspace root directory path.
+#' @export
+find_workspace <- function(path = ".") {
+    rprojroot::find_root(rprojroot::has_file(".workspace"), path = path)
 }
 
+#' Find the project root directory
+#'
+#' Locates the project root by looking for a `.project` file, falling back to
+#' workspace root if no project is found.
+#'
+#' @param path Starting path to search from. Defaults to current directory.
+#'
+#' @return The project root directory path (or workspace root if no project found).
+#' @export
 find_project <- function(path = ".") {
     tryCatch(
         rprojroot::find_root(rprojroot::has_file(".project"), path = path),
         error = function(e) {
             message("No .project file found, using workspace root")
-            return(find_workspace())
+            return(find_workspace(path = path))
         }
     )
 }

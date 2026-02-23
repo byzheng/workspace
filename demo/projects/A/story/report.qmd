@@ -8,7 +8,7 @@ This report reads pipeline outputs from `_targets`.
 library(workspace)
 library(targets)
 
-tar_config_set(store = path("_targets"))
+tar_config_set(store = workspace_targets_store())
 
 data <- tar_read(data)
 model <- tar_read(model)

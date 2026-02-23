@@ -3,8 +3,8 @@ library(targets)
 library(tarchetypes)
 library(workspace)
 print(getwd())
+print(path("script/functions.R"))
 source(path("script/functions.R"))
-tar_option_set(packages = c("readr", "dplyr", "ggplot2"))
 list(
     tar_target(file, path("source/data.csv"), format = "file"),
     tar_target(data, get_data(file)),
