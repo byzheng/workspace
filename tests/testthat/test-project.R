@@ -91,6 +91,7 @@ test_that("find_prj uses PROJECT_DIR when set", {
     root <- file.path(tempdir(), paste0("workspace-test-", as.integer(stats::runif(1, 1, 1e9))))
     dir.create(root, recursive = TRUE, showWarnings = FALSE)
     file.create(file.path(root, ".workspace"))
+    dir.create(file.path(root, "projects", "A"), recursive = TRUE, showWarnings = FALSE)
 
     setwd(root)
     old_project_dir <- Sys.getenv("PROJECT_DIR", unset = "")
