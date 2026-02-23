@@ -5,14 +5,14 @@
 <url><loc>/authors.html</loc></url>
 <url><loc>/index.html</loc></url>
 <url><loc>/news/index.html</loc></url>
-<url><loc>/reference/find_project.html</loc></url>
+<url><loc>/reference/find_prj.html</loc></url>
 <url><loc>/reference/find_ws.html</loc></url>
-<url><loc>/reference/get_project_name.html</loc></url>
+<url><loc>/reference/get_prj_name.html</loc></url>
 <url><loc>/reference/index.html</loc></url>
 <url><loc>/reference/path_prj.html</loc></url>
 <url><loc>/reference/path_ws.html</loc></url>
 <url><loc>/reference/tar_make_project.html</loc></url>
-<url><loc>/reference/tar_read_project.html</loc></url>
-<url><loc>/reference/targets_store.html</loc></url>
+<url><loc>/reference/tar_read_prj.html</loc></url>
+<url><loc>/reference/targets_store_prj.html</loc></url>
 </urlset>
 
