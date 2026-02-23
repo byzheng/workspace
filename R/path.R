@@ -10,6 +10,20 @@ active_file <- function() {
 }
 
 
+find_workspace <- function() {
+    rprojroot::find_root(rprojroot::has_file(".workspace"))
+}
+
+find_project <- function(path = ".") {
+    tryCatch(
+        rprojroot::find_root(rprojroot::has_file(".project"), path = path),
+        error = function(e) {
+            message("No .project file found, using workspace root")
+            return(find_workspace())
+        }
+    )
+}
+
 
 #' Build a path relative to the project root
 #'
@@ -52,18 +66,4 @@ path <- function(...) {
         }
     }    
     return(normalizePath(file.path(root_dir, ...), mustWork = FALSE))
-}
-
-find_workspace <- function() {
-    rprojroot::find_root(rprojroot::has_file(".workspace"))
-}
-
-find_project <- function(path = ".") {
-    tryCatch(
-        rprojroot::find_root(rprojroot::has_file(".project"), path = path),
-        error = function(e) {
-            message("No .project file found, using workspace root")
-            return(find_workspace())
-        }
-    )
 }
